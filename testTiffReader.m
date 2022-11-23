@@ -2,8 +2,7 @@
 
 path = fileparts( which('testTiffReader.m') );
 cd(path);
-filename = 'ArchedHeadStand.tiff';
-filename = 'WBC_CRF118.cif';
+filename = 'Agrostis_gigantea_32_.cif';
 
 [Info,I] = tiff_read_header( filename );
 

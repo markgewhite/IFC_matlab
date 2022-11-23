@@ -147,6 +147,7 @@ TiffInfo{npage}=TInfo;
 
 % If NextIFD is larger then zero then there are multiple images/headers
 NextIFD=TiffInfo{npage}.NextIFD;
+
 while(NextIFD~=0)
     npage=npage+1;
     TInfo=readIFD(fid,NextIFD,TagId,TagName);
@@ -249,7 +250,9 @@ for j=1:IfdLength
             TagValue=fread(fid,TagLength,'uint8=>uint8');
         case 2 % ASCII
             TagValue=fread(fid,TagLength,'uint8=>uint8')';
-            if(TagValue(end)==0), TagValue=TagValue(1:end-1); end
+            if ~isempty(TagValue)
+                if(TagValue(end)==0), TagValue=TagValue(1:end-1); end
+            end
             TagValue=char(TagValue);
         case 3 % Word
             TagValue=fread(fid,TagLength,'uint16=>uint16');
@@ -357,6 +360,8 @@ switch(TiffInfo.BitsPerSample(1))
         type='single';
 end
 
+% MW: temporary fix
+TiffInfo.PlanarConfiguration = 0;
 if(TiffInfo.PlanarConfiguration==1)
     s=double([ TiffInfo.SamplesPerPixel TiffInfo.ImageWidth TiffInfo.ImageHeight]);
 else
