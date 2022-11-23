@@ -36,9 +36,9 @@ def getOffsets( input_file ):
     offsets_r = rGetOffsets(fileName = input_file, \
                             fast = True, \
                             display_progress = False )
-    offsets = intVector_to_int( offsets_r )
+    #offsets = intVector_to_int( offsets_r )
     
-    return offsets, offsets_r
+    return offsets_r
 
 
 def getInfo( input_file ):
@@ -51,12 +51,18 @@ def getInfo( input_file ):
     return info_r
 
 
-def getIFD( input_file, offset_selection ):
+def getIFD( input_file, offsets_r, idx ):
     
     rGetIFD = robjects.r['getIFD']
-    selection_r = robjects.IntVector(offset_selection.astype(int))
+    rSubsetOffsets = robjects.r['subsetOffsets']
     
-    IFDs_r = rGetIFD( fileName = input_file, offsets = selection_r )
+    idx_r = robjects.IntVector(idx)
+    
+    sub_offs_r = rSubsetOffsets(offsets_r, \
+                              objects = idx_r, \
+                              image_type = 'img')
+    
+    IFDs_r = rGetIFD( fileName = input_file, offsets = sub_offs_r )
 
     return IFDs_r
 
@@ -67,17 +73,20 @@ def objectExtract( IFDs, info, img_type = 'raw' ):
     
     if img_type=='raw':
     
-        img = rObjectExtract(ifd = IFDs, \
+        obj = rObjectExtract(ifd = IFDs, \
                              info = info, \
                              mode = 'raw', \
                              export = 'matrix')
     
     elif img_type=='rgb':
-        img = rObjectExtract(ifd = IFDs, \
+        obj = rObjectExtract(ifd = IFDs, \
                              info = info, \
                              mode = 'rgb', \
                              export = 'base64', \
                              base64_id = True)
+            
+    rcode = 'paste(%s[[1]]$`Ch 01`)' %(obj.r_repr())
+    img = robjects.r(rcode)
 
     return img
 
@@ -95,4 +104,10 @@ def exportToXIF( input_file_cif, output_file_cif,
                   overwrite = True, 
                   objects = robjects.IntVector([0,1,4]))
 
+
+#offsets_r = getOffsets( 'Agrostis_gigantea_32_.cif' )
+#info = getInfo( 'Agrostis_gigantea_32_.cif' )
+#sel = np.arange(10)
+#ifds = getIFD( 'Agrostis_gigantea_32_.cif', offsets_r, sel )
+#data = objectExtract( ifds, info )
 

@@ -24,6 +24,14 @@ py.ifc.import_ifc();
 cif_path = fileparts( which('cif_demo.m') );
 cif_file = fullfile( cif_path, "Agrostis_gigantea_32_.cif" );
 
-offsets = double(py.ifc.getOffsets( cif_file ));
+rOffsets = py.ifc.getOffsets( cif_file );
 
+rInfo = py.ifc.getInfo( cif_file );
+
+nSamples = length( rOffsets.names );
+nSamples = 6241;
+selection = randsample( nSamples, 10 ); 
+rIFDs = py.ifc.getIFD( cif_file, rOffsets, selection );
+
+data = py.ifc.objectExtract( rIFDs, rInfo );
 
