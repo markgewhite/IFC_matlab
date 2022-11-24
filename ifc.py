@@ -19,15 +19,34 @@ def import_ifc():
     ifc_data_package = importr('IFCdata')
  
 
-def intVector_to_int( xr ):
+def convert_intVector( rVec ):
     
-    n = len(xr)
-    x = np.zeros([n,1]).astype(int)
-    for i in range(len(xr)):
-        x[i] = xr[i]
+    n = len(rVec)
+    pyVec = np.zeros([n,1]).astype(int)
+    for i in range(n):
+        pyVec[i] = rVec[i]
         
-    # x = x.transpose()
-    return x
+    return pyVec
+
+
+def convert_listVector( rList ):
+    
+    n = len(rList)
+    pyList = list( rList[0] )
+    for i in range(1,n):
+        pyList.append( rList[i] )
+    
+    return pyList
+
+
+def convert_imgObj( rObj ):
+    
+    pyImgList = convert_listVector( rObj )
+
+    n = len(pyImgList)
+    
+       
+
 
     
 def getOffsets( input_file ):
@@ -37,7 +56,6 @@ def getOffsets( input_file ):
     offsets_r = rGetOffsets(fileName = input_file, \
                             fast = True, \
                             display_progress = False )
-    #offsets = intVector_to_int( offsets_r )
     
     return offsets_r
 
@@ -98,9 +116,15 @@ def ExtractImagesToMatrix( info, idx, offsets_r ):
     
     idx_r = robjects.IntVector(idx)
     
-    imgs = rExtractImagesToMatrix(info = info, \
+    imgs_r = rExtractImagesToMatrix(info = info, \
                                   objects = idx_r, \
                                   offsets = offsets_r)
+        
+    imgs_rList = imgs_r[0]
+    nImgs = len(imgs_rList)
+    imgs = list()
+    for i in range(nImgs):
+        imgs.append( np.asarray(imgs_rList[i]) )
             
     return imgs
 

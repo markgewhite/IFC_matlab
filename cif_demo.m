@@ -34,3 +34,7 @@ selection = randsample( nSamples, 10 );
 
 data = py.ifc.ExtractImagesToMatrix( rInfo, selection, rOffsets );
 
+img = cell(data);
+for i = 1:6
+    img{i} = double(img{i});
+end
