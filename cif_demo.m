@@ -31,7 +31,6 @@ rInfo = py.ifc.getInfo( cif_file );
 nSamples = length( rOffsets.names );
 nSamples = 6241;
 selection = randsample( nSamples, 10 ); 
-rIFDs = py.ifc.getIFD( cif_file, rOffsets, selection );
 
-data = py.ifc.objectExtract( rIFDs, rInfo );
+data = py.ifc.ExtractImagesToMatrix( rInfo, selection, rOffsets );
 

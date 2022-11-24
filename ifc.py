@@ -5,6 +5,7 @@
 
 import os
 os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
+#os.environ['R_HOME'] = 'C:/Programs/R/412FF6~1.1'
 
 import rpy2
 import rpy2.robjects as robjects
@@ -90,6 +91,19 @@ def objectExtract( IFDs, info, img_type = 'raw' ):
 
     return img
 
+
+def ExtractImagesToMatrix( info, idx, offsets_r ):
+    
+    rExtractImagesToMatrix = robjects.r['ExtractImages_toMatrix']
+    
+    idx_r = robjects.IntVector(idx)
+    
+    imgs = rExtractImagesToMatrix(info = info, \
+                                  objects = idx_r, \
+                                  offsets = offsets_r)
+            
+    return imgs
+
     
 def exportToXIF( input_file_cif, output_file_cif,
                  data_dir = "/Users/markgewhite/Google Drive/Academia/Postdoc/IFC/" ):
@@ -105,9 +119,5 @@ def exportToXIF( input_file_cif, output_file_cif,
                   objects = robjects.IntVector([0,1,4]))
 
 
-#offsets_r = getOffsets( 'Agrostis_gigantea_32_.cif' )
-#info = getInfo( 'Agrostis_gigantea_32_.cif' )
-#sel = np.arange(10)
-#ifds = getIFD( 'Agrostis_gigantea_32_.cif', offsets_r, sel )
-#data = objectExtract( ifds, info )
+
 
