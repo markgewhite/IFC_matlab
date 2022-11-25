@@ -29,12 +29,13 @@ rOffsets = py.ifc.getOffsets( cif_file );
 rInfo = py.ifc.getInfo( cif_file );
 
 nSamples = length( rOffsets.names );
-nSamples = 6241;
-selection = randsample( nSamples, 10 ); 
+nSelection = 10;
+selection = randsample( nSamples, nSelection );
+selection = sort(selection);
 
 data = py.ifc.ExtractImagesToMatrix( rInfo, selection, rOffsets );
 
 img = cell(data);
-for i = 1:6
+for i = 1:length(img)
     img{i} = double(img{i});
 end

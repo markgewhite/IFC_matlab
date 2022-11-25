@@ -4,8 +4,8 @@
 # from https://medium.com/cassandra-cryptoassets/how-to-integrate-and-run-r-in-python-1311254caf39#:~:text=Calling%20an%20R%20function%20from%20Python%20Ok%2C%20let%E2%80%99s,Let%E2%80%99s%20fetch%20the%20function%20from%20R%20into%20Python.
 
 import os
-os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
-#os.environ['R_HOME'] = 'C:/Programs/R/412FF6~1.1'
+#os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
+os.environ['R_HOME'] = 'C:/Programs/R/412FF6~1.1'
 
 import rpy2
 import rpy2.robjects as robjects
@@ -120,12 +120,16 @@ def ExtractImagesToMatrix( info, idx, offsets_r ):
                                   objects = idx_r, \
                                   offsets = offsets_r)
         
-    imgs_rList = imgs_r[0]
-    nImgs = len(imgs_rList)
+    nImgs = len(imgs_r)
+    print('Images extracted = ' + str(nImgs))
     imgs = list()
     for i in range(nImgs):
-        imgs.append( np.asarray(imgs_rList[i]) )
-            
+        nCh, h, w = np.asarray(imgs_r[i]).shape
+        img = np.zeros([h,w,nCh])        
+        for c in range(nCh):
+            img[:,:,c] =  np.asarray(imgs_r[i][c])
+        imgs.append( img )
+
     return imgs
 
     
