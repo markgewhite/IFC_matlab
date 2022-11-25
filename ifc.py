@@ -80,18 +80,21 @@ def objectExtract( IFDs, info, img_type = 'raw' ):
     return img
 
 
-def ExtractImagesToMatrix( info, idx, offsets_r ):
+def extractImagesToMatrix( info, offsets_r, idx = None ):
     
     rExtractImagesToMatrix = robjects.r['ExtractImages_toMatrix']
     
-    idx_r = robjects.IntVector(idx)
+    if idx is None:
+        imgs_r = rExtractImagesToMatrix(info = info, offsets = offsets_r)
+    else:
+        idx_r = robjects.IntVector(idx)
+        imgs_r = rExtractImagesToMatrix(info = info, \
+                                        objects = idx_r, \
+                                        offsets = offsets_r)
+    print('Images extracted from file')
     
-    imgs_r = rExtractImagesToMatrix(info = info, \
-                                  objects = idx_r, \
-                                  offsets = offsets_r)
-        
+    print('Converting images to numpy arrays...')
     nImgs = len(imgs_r)
-    print('Images extracted = ' + str(nImgs))
     imgs = list()
     for i in range(nImgs):
         nCh, h, w = np.asarray(imgs_r[i]).shape
@@ -99,11 +102,17 @@ def ExtractImagesToMatrix( info, idx, offsets_r ):
         for c in range(nCh):
             img[:,:,c] =  np.asarray(imgs_r[i][c])
         imgs.append( img )
+    print('Complete')
 
     return imgs
 
 
+def extractCIFImages( input_file ):
 
+    offsets_r = getOffsets( input_file )      
+    info_r = getInfo( input_file )
+    imgs = extractImagesToMatrix( info_r, offsets_r)
 
+    return imgs
 
 
