@@ -56,63 +56,25 @@ def getIFD( input_file, offsets_r, idx ):
     return IFDs_r
 
 
-def objectExtract( IFDs, info, img_type = 'raw' ):
-    
-    rObjectExtract = robjects.r['objectExtract']
-    
-    if img_type=='raw':
-    
-        obj = rObjectExtract(ifd = IFDs, \
-                             info = info, \
-                             mode = 'raw', \
-                             export = 'matrix')
-    
-    elif img_type=='rgb':
-        obj = rObjectExtract(ifd = IFDs, \
-                             info = info, \
-                             mode = 'rgb', \
-                             export = 'base64', \
-                             base64_id = True)
-            
-    rcode = 'paste(%s[[1]]$`Ch 01`)' %(obj.r_repr())
-    img = robjects.r(rcode)
-
-    return img
-
-
-def extractImagesToMatrix( info, offsets_r, idx = None ):
+def extractImagesToMatrix( input_file, idx = None ):
     
     rExtractImagesToMatrix = robjects.r['ExtractImages_toMatrix']
     
     if idx is None:
-        imgs_r = rExtractImagesToMatrix(info = info, offsets = offsets_r)
+        imgs_r = rExtractImagesToMatrix(fileName = input_file,
+                                        display_progress = False)
     else:
         idx_r = robjects.IntVector(idx)
-        imgs_r = rExtractImagesToMatrix(info = info, \
-                                        objects = idx_r, \
-                                        offsets = offsets_r)
-    print('Images extracted from file')
+        imgs_r = rExtractImagesToMatrix(fileName = input_file,
+                                        objects = idx_r,
+                                        display_progress = False)
     
-    print('Converting images to numpy arrays...')
     nImgs = len(imgs_r)
     imgs = list()
     for i in range(nImgs):
-        nCh, h, w = np.asarray(imgs_r[i]).shape
-        img = np.zeros([h,w,nCh])        
-        for c in range(nCh):
-            img[:,:,c] =  np.asarray(imgs_r[i][c])
-        imgs.append( img )
-    print('Complete')
+        imgs.append( np.asarray(imgs_r[i]) )
 
     return imgs
 
-
-def extractCIFImages( input_file ):
-
-    offsets_r = getOffsets( input_file )      
-    info_r = getInfo( input_file )
-    imgs = extractImagesToMatrix( info_r, offsets_r)
-
-    return imgs
 
 

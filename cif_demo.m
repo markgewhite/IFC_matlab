@@ -24,9 +24,11 @@ py.ifc.import_ifc();
 cif_path = fileparts( which('cif_demo.m') );
 cif_file = fullfile( cif_path, "Agrostis_gigantea_32_.cif" );
 
-data = py.ifc.extractCIFImages( cif_file );
+selection = 1:20;
+data = py.ifc.extractImagesToMatrix( cif_file, selection );
 
 img = cell(data);
+clear data;
 for i = 1:length(img)
-    img{i} = double(img{i});
+    img{i} = single(img{i});
 end
