@@ -17,38 +17,8 @@ import numpy as np
 def import_ifc():
     ifc_package = importr('IFC')
     ifc_data_package = importr('IFCdata')
- 
-
-def convert_intVector( rVec ):
-    
-    n = len(rVec)
-    pyVec = np.zeros([n,1]).astype(int)
-    for i in range(n):
-        pyVec[i] = rVec[i]
-        
-    return pyVec
 
 
-def convert_listVector( rList ):
-    
-    n = len(rList)
-    pyList = list( rList[0] )
-    for i in range(1,n):
-        pyList.append( rList[i] )
-    
-    return pyList
-
-
-def convert_imgObj( rObj ):
-    
-    pyImgList = convert_listVector( rObj )
-
-    n = len(pyImgList)
-    
-       
-
-
-    
 def getOffsets( input_file ):
     
     rGetOffsets = robjects.r['getOffsets']
@@ -132,19 +102,7 @@ def ExtractImagesToMatrix( info, idx, offsets_r ):
 
     return imgs
 
-    
-def exportToXIF( input_file_cif, output_file_cif,
-                 data_dir = "/Users/markgewhite/Google Drive/Academia/Postdoc/IFC/" ):
-    
-    input_file_cif = data_dir + input_file_cif
-    output_file_cif = data_dir + output_file_cif
 
-    rExportToXIF = robjects.r['ExportToXIF']
-
-    rExportToXIF( fileName = input_file_cif, 
-                  write_to = output_file_cif,
-                  overwrite = True, 
-                  objects = robjects.IntVector([0,1,4]))
 
 
 
