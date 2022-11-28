@@ -101,3 +101,5 @@ The output is a cell array of multi-channel arrays.
 
 This is the first of several functions that will be added.
 
+A test CIF file can be obtained [here](https://drive.google.com/file/d/1F2P3BPfnDOwwUzirtLN-WbPVb-pM1HQ-/view?usp=share_link): 
+
