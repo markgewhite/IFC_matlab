@@ -4,9 +4,27 @@
 # from https://medium.com/cassandra-cryptoassets/how-to-integrate-and-run-r-in-python-1311254caf39#:~:text=Calling%20an%20R%20function%20from%20Python%20Ok%2C%20let%E2%80%99s,Let%E2%80%99s%20fetch%20the%20function%20from%20R%20into%20Python.
 
 import os
-os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
 
-import rpy2
+r_ref_filename = 'r_home_path.txt'
+#check if file is present
+if os.path.isfile(r_ref_filename):
+    #open text file in read mode
+    r_ref_file = open(r_ref_filename, "r")
+ 
+    #read whole file to a string
+    r_home_path = r_ref_file.read()
+    # remove newline character if present
+    if '\n' in r_home_path:
+        r_home_path = r_home_path[:-1]
+    print(r_home_path)
+ 
+    #close file
+    r_ref_file.close()
+else:
+    print('Cannot find R reference file: r_home_path.txt')
+ 
+os.environ['R_HOME'] = r_home_path
+
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 import rpy2.robjects.numpy2ri as rpyn
@@ -32,8 +50,7 @@ def getInfo( input_file ):
     
     rGetInfo = robjects.r['getInfo']
     
-    info_r = rGetInfo( input_file, \
-                       'analysis' )
+    info_r = rGetInfo( input_file, 'analysis' )
     
     return info_r
 

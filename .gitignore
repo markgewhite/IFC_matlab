@@ -1,5 +1,6 @@
 *.tiff
 *.cif
 *.mat
+*.txt
 __pycache__/*
 
