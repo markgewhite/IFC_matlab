@@ -3,13 +3,13 @@
 ## Access to the IFC package from MATLAB
 
 The IFC package provides functions for processing CIF files. The package is written in R (with C++ functions at its core) without an equivalent Matlab implementation.  
-[https://github.com/gitdemont/IFC](url)
+[https://github.com/gitdemont/IFC](https://github.com/gitdemont/IFC)
 
 This repository contains Matlab wrapper functions that call these R IFC functions, thereby making available the highly regarded IFC library to Matlab users. Since it is not currently possible to call R functions directly from Matlab, access is made possible via Python using the RPY2 module. 
-[https://github.com/rpy2/rpy2](url)
+[https://github.com/rpy2/rpy2](https://github.com/rpy2/rpy2)
 
 Matlab has a well-developed interface with Python, permitting function calls and extensive interoperability between variable types.
-[https://uk.mathworks.com/help/matlab/python-language.html](url)
+[https://uk.mathworks.com/help/matlab/python-language.html](https://uk.mathworks.com/help/matlab/python-language.html)
 
 R and Python need to be installed (see instructions below) in a one-time operation. These applications do not need to be open when running Matlab.
 
@@ -20,7 +20,7 @@ It may seem like a hassle to install the R and Python environments (if they don'
 
 ### R installation
 
-R will need to be installed on your system to run the IFC package. The latest version can be installed from [https://cran.r-project.org/mirrors.html](url). 
+R will need to be installed on your system to run the IFC package. The latest version can be installed from [https://cran.r-project.org/mirrors.html](https://cran.r-project.org/mirrors.html). 
 
 1. Choose the download site (CRAN Mirror) nearest to you
 2. Click on the download link for your operating system
@@ -31,7 +31,7 @@ You don't need to open the R Studio application. What matters is the R binaries 
 
 ### Python installation
 
-The latest version of Python is available for installation here: [https://www.python.org/downloads/](url). The web page should offer the latest version of Python for your operating system directly. Install the package following the usual prompts for software installation on your system. Accept the defaults.
+The latest version of Python is available for installation here: [https://www.python.org/downloads/](https://www.python.org/downloads/). The web page should offer the latest version of Python for your operating system directly. Install the package following the usual prompts for software installation on your system. Accept the defaults.
 
 At the command line, check that python was installed correctly:
 ```Unix
@@ -46,20 +46,19 @@ Check that the package installer, pip, was installed with Python:
 > pip --version
 ```
 
-If not, go to [https://pip.pypa.io/en/stable/](url).
+If not, go to [https://pip.pypa.io/en/stable/](https://pip.pypa.io/en/stable/).
 
 ### Package installation
 
-We aim to provide a makefile shortly to automate the installation of the R packages and Python modules, which are relatively few. 
+The installation of the R packages and Python modules is automated by a Makefile. Simply type:
 
-In the meantime, execute the following commands, responding to the prompts: 
 ```Unix
-> Rscript install_IFC_packages.R 
-> pip install numpy
-> pip install rpy2
+> make 
 ```
 
-If the installations proceed successfully, the final step is to identify the R environment home. In a Unix environment, such as Mac OS:
+at the command line when in the directory where this repository is deployed. The makefile creates a Python virtual environment called <code>ifc_pyenv</code> in a sub-directory of the same name and activates it. It also stores the R home directory in <code>r_home_path.txt</code>, which is read by the Python IFC module on initialization. 
+
+If that fails, you can create <code>r_home_path.txt</code> manually by copying and pasting the output into a text file with this name. At the command ltine, in a Unix environment, such as Mac OS:
 ```Unix
 > R RHOME
 ```
@@ -67,29 +66,14 @@ In Windows:
 ```Windows
 > %R_HOME%
 ```
-Copy the command line response. Open <code>ifc.py</code> using your preferred text/code editor and modify the <code>R_HOME</code> definition, which can be found close to the beginning of the file: 
-
-e.g.
-
-<code>os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'</code>
-
-and save the file.
-
-**NOTE: if you modify the Python code, Matlab has to be restarted.**
-
 
 ## Getting started
 
-In Matlab, for initialization the Python environment needs to be identified and the IFC package needs to be loaded. 
+In Matlab, for initialization the Python environment needs to be identified and the IFC package needs to be loaded. The single argument to <code>init_ifc()</code> specifies where the Python environment's executable is to be found.
 
 ```Matlab
-pythonEnv = init_ifc;
-```
-
-By default, Matlab identifies the base Python environment, but if you want to provide another environment you can do so by identifying it in the function call.
-
-```Matlab
-pythonEnv = init_ifc(python_path);
+py_path = './ifc_pyenv/bin/python';
+pythonEnv = init_ifc( py_path );
 ```
 
 It is then straightforward to extract images from a given file - see <code>cif_demo.m</code>. The function is:
