@@ -5,9 +5,6 @@
 
 import os
 
-working_path = os.getcwd()
-print('Current working directory = ' + working_path)
-
 r_ref_filename = 'r_home_path.txt'
 #check if file is present
 if os.path.isfile(r_ref_filename):
@@ -26,8 +23,7 @@ if os.path.isfile(r_ref_filename):
 else:
     print('Cannot find R reference file: r_home_path.txt')
  
-#os.environ['R_HOME'] = r_home_path
-os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
+os.environ['R_HOME'] = r_home_path
 
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
