@@ -3,7 +3,10 @@
 clear;
 
 % initialize
-pythonEnv = init_ifc;
+%pythonEnv = init_ifc( '/Users/markgewhite/opt/anaconda3/envs/ifc‑test/bin/python' );
+%pythonEnv = init_ifc( '/Users/markgewhite/opt/anaconda3/envs/spyder-env/bin/python' );
+pythonEnv = init_ifc( '/Users/markgewhite/opt/anaconda3/envs/ifctest/bin/python' );
+
 
 % run a test export
 cif_path = fileparts( which('cif_demo.m') );

@@ -7,7 +7,7 @@ function [pythonEnv, module] = init_ifc( pyEnvPath )
     
     else   
         % identify the specified python environment
-        pyenv('Version', pyEnvPath );
+        pythonEnv = pyenv('Version', pyEnvPath );
     end
     
     % add IFC module to python path
