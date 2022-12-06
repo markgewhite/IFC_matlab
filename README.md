@@ -61,9 +61,12 @@ You can download a compatible version of Python from [https://www.python.org/dow
 1. Download the package/binaries
 2. Run the executable installer
 3. Click checkbox "Add Python to PATH"
-4. Select default or custom installation
+4. Select custom installation - see below
 
-If you choose a custom installation, the following are required:
+If, as is most likely, the latest version of Python is not compatible with Matab, you will need to click on link for your operating system and then find the suitable version. There are lots of options. For Windows, the "Windows installer (64-bit)" is recommended. For Mac, choose the installer for your CPU type.  
+
+For the custom installation, the following are required:
+ - Install for all users
  - Optional Features: pip, py launcher
  - Advanced Options: Associate files with Python, Add Python to environment variables.
 

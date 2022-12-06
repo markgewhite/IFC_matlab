@@ -5,7 +5,7 @@ useVirtualEnv = false; % optional
 
 % initialize
 cif_path = fileparts( which('cif_demo.m') );
-cif_file = fullfile( cif_path, 'data/example.cif' );
+cif_file = fullfile( cif_path, 'example.cif' );
 
 if useVirtualEnv
     % Specify path to your own environment's Python executable here
