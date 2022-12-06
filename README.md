@@ -27,33 +27,35 @@ R will need to be installed on your system to run the IFC package. The latest ve
 3. Click on the package/binaries suitable for your OS version (base)
 4. Follow the usual prompts to install the software using the defaults ('User Installation')
 
-You don't need to open the R Studio application. What matters is the R binaries are installed.
+If you are installing in Windows, copy the Program Files folder for R that you are asked to confirm during the installation. Open Notepad (or another text editor) and paste the path as a single line into the file. Save the file as <code>r_home_path.txt</code> in the same directory as the Matlab code will reside (see below). This step is necessary because in the R installation on windows does not add R_HOME to the PATH environment variable. If you have a Mac, this file is created automatically by the Makefile (see below). 
+
+You can also obtain R_HOME by opening R Studio and typing:
+```Unix
+> R.home()
+```
+Copy and paste the command's output into the file <code>r_home_path.txt</code>.
+
+Later when running Matlab, you don't need R Studio open.
 
 ### Python installation
 
-The latest version of Python is available for installation here: [https://www.python.org/downloads/](https://www.python.org/downloads/). The web page should offer the latest version of Python for your operating system directly. 
+Python will need to be installed as well to provide the interface between Matlab and R. Check which Python version is compatible with your version of Matlab [here](https://uk.mathworks.com/support/requirements/python-compatibility.html). Matlab R2022b supports Python 3.8, 3.9, and 3.10, but not 3.11. Also check the Python version is compatible with the RPY2 package [here](https://github.com/rpy2/rpy2).
+
+
+You can download a compatible version of Python from [https://www.python.org/downloads/](https://www.python.org/downloads/).
 
 1. Download the package/binaries
-2. Run the executable installer *
-3. Click Add Python to PATH (Windows environmental variables)
+2. Run the executable installer
+3. Click Add Python to PATH
 
-\* Either accept the default installation of choose Customize installation. In the latter case,  select the following Optional Features:
- - pip
- - py launcher
- - for all users
-
-and the followig Advanced Options at a minimum:
-
- - Associate files with Python
- - Add Python to environment variables
-
+Either accept the default installation of choose Customize installation. In the latter case,  select the following Optional Features (pip, py launcher) and Advanced Options (Associate files with Python, Add Python to environment variables).
 
 Check that python has been installed correctly by launching the command line (if you already had the command line open, close and re-start it):
 ```Unix
 > python --version
 ```
 
-The minimum version for Python depend on the RPY2 package, which can be confirmed [here](https://github.com/rpy2/rpy2).
+If command is not recognised, then you might have forgotten to click set PATH during the installation. Helpful instructions can be found [here](https://www.digitalocean.com/community/tutorials/install-python-windows-10as) well as elsewhere. If you want to know more about Python virtual environments, try this [primer](https://realpython.com/python-virtual-environments-a-primer/).
 
 Check that the package installer, pip, was installed with Python:
 
@@ -63,13 +65,13 @@ Check that the package installer, pip, was installed with Python:
 
 If not, go to [https://pip.pypa.io/en/stable/](https://pip.pypa.io/en/stable/).
 
-### Package installation
+### Repository installation
 
 Download this repository as follows:
 
 1. Click on the green Code button above, selecting Download ZIP. 
 2. Open the downloaded ZIP file and save the files to a suitable directory.
-3. Navigate to that directory at the command line with <code>cd></code>
+3. Navigate to that directory at the command line.
 
 If you have a Bash shell or similar (Terminal on MacOS), you can run a Makefile to install the R packages and Python modules automatically. At the command line, simply type:
 
@@ -79,29 +81,21 @@ If you have a Bash shell or similar (Terminal on MacOS), you can run a Makefile 
 
 The makefile creates a Python virtual environment called <code>ifc_pyenv</code> in a sub-directory of the same name and activates it. It also stores the R home directory in <code>r_home_path.txt</code>, which is read by the Python IFC module on initialization. 
 
-If you don't have such access, you can use the Windows MSDOS command line, typing the following commands in sequence.
+If you don't have such access, you can use the Windows MSDOS command line, typing the following commands:
 
 ```Unix
 > python -m venv ifc_pyenv
 > ifc_pyenv\Scripts\activate
-> 
+> pip install numpy rpy2
 ```
 
-you can create <code>r_home_path.txt</code> manually by copying and pasting the output into a text file with this name. At the command ltine, in a Unix environment, such as Mac OS:
-```Unix
-> R RHOME
-```
-In Windows:
-```Windows
-> %R_HOME%
-```
 
 ## Getting started
 
 In Matlab, for initialization the Python environment needs to be identified and the IFC package needs to be loaded. The single argument to <code>init_ifc()</code> specifies where the Python environment's executable is to be found.
 
 ```Matlab
-py_path = './ifc_pyenv/bin/python';
+py_path = './ifc_pyenv';
 pythonEnv = init_ifc( py_path );
 ```
 

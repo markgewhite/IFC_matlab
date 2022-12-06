@@ -61,7 +61,7 @@ function path = getBinPath( pyEnvPath )
     hasExec = cellfun( @(s) strcmp(s, 'executable'), fileText , ...
                        'UniformOutput', false);
     if any(hasExec{1})
-        path = fileText{2}(hasExec{1});
+        path = fileText{2}{hasExec{1}};
     else
         error(['Executable not specified in ' configFile]);
     end
