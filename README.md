@@ -46,9 +46,12 @@ You can download a compatible version of Python from [https://www.python.org/dow
 
 1. Download the package/binaries
 2. Run the executable installer
-3. Click Add Python to PATH
+3. Click checkbox "Add Python to PATH"
+4. Select default or custom installation
 
-Either accept the default installation of choose Customize installation. In the latter case,  select the following Optional Features (pip, py launcher) and Advanced Options (Associate files with Python, Add Python to environment variables).
+If you choose a custom installation, the following are required:
+ - Optional Features: pip, py launcher
+ - Advanced Options: Associate files with Python, Add Python to environment variables.
 
 Check that python has been installed correctly by launching the command line (if you already had the command line open, close and re-start it):
 ```Unix
@@ -89,16 +92,19 @@ If you don't have such access, you can use the Windows MSDOS command line, typin
 > pip install numpy rpy2
 ```
 
+Also make sure you have created the file <code>r_home_path.txt</code> (see above).
 
 ## Getting started
 
-In Matlab, for initialization the Python environment needs to be identified and the IFC package needs to be loaded. The single argument to <code>init_ifc()</code> specifies where the Python environment's executable is to be found.
+Launch Matlab and open <code>cif_demo.m</code>. Initialization of the Python environment is required from within Matlab, a task that is performed by the function <code>init_ifc()</code>, which requires the path to the Python environment as a single argument.
 
 ```Matlab
 py_path = './ifc_pyenv';
 pythonEnv = init_ifc( py_path );
 ```
 
+(The demo assumes the Python environment - just a file structure - is a sub-directory where the Matlab code is located.)
+ 
 It is then straightforward to extract images from a given file - see <code>cif_demo.m</code>. The function is:
 
 ```Matlab
