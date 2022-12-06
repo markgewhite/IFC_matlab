@@ -23,17 +23,32 @@ It may seem like a hassle to install the R and Python environments (if they don'
 R will need to be installed on your system to run the IFC package. The latest version can be installed from [https://cran.r-project.org/mirrors.html](https://cran.r-project.org/mirrors.html). 
 
 1. Choose the download site (CRAN Mirror) nearest to you
-2. Click on the download link for your operating system
-3. Click on the package suitable for your OS version.
-4. Follow the usual prompts to install the software using the defaults
+2. Click on the download link for your operating system (e.g. Download R for ...)
+3. Click on the package/binaries suitable for your OS version (base)
+4. Follow the usual prompts to install the software using the defaults ('User Installation')
 
 You don't need to open the R Studio application. What matters is the R binaries are installed.
 
 ### Python installation
 
-The latest version of Python is available for installation here: [https://www.python.org/downloads/](https://www.python.org/downloads/). The web page should offer the latest version of Python for your operating system directly. Install the package following the usual prompts for software installation on your system. Accept the defaults.
+The latest version of Python is available for installation here: [https://www.python.org/downloads/](https://www.python.org/downloads/). The web page should offer the latest version of Python for your operating system directly. 
 
-At the command line, check that python was installed correctly:
+1. Download the package/binaries
+2. Run the executable installer *
+3. Click Add Python to PATH (Windows environmental variables)
+
+\* Either accept the default installation of choose Customize installation. In the latter case,  select the following Optional Features:
+ - pip
+ - py launcher
+ - for all users
+
+and the followig Advanced Options at a minimum:
+
+ - Associate files with Python
+ - Add Python to environment variables
+
+
+Check that python has been installed correctly by launching the command line (if you already had the command line open, close and re-start it):
 ```Unix
 > python --version
 ```
@@ -50,15 +65,29 @@ If not, go to [https://pip.pypa.io/en/stable/](https://pip.pypa.io/en/stable/).
 
 ### Package installation
 
-The installation of the R packages and Python modules is automated by a Makefile. Simply type:
+Download this repository as follows:
+
+1. Click on the green Code button above, selecting Download ZIP. 
+2. Open the downloaded ZIP file and save the files to a suitable directory.
+3. Navigate to that directory at the command line with <code>cd></code>
+
+If you have a Bash shell or similar (Terminal on MacOS), you can run a Makefile to install the R packages and Python modules automatically. At the command line, simply type:
 
 ```Unix
 > make 
 ```
 
-at the command line when in the directory where this repository is deployed. The makefile creates a Python virtual environment called <code>ifc_pyenv</code> in a sub-directory of the same name and activates it. It also stores the R home directory in <code>r_home_path.txt</code>, which is read by the Python IFC module on initialization. 
+The makefile creates a Python virtual environment called <code>ifc_pyenv</code> in a sub-directory of the same name and activates it. It also stores the R home directory in <code>r_home_path.txt</code>, which is read by the Python IFC module on initialization. 
 
-If that fails, you can create <code>r_home_path.txt</code> manually by copying and pasting the output into a text file with this name. At the command ltine, in a Unix environment, such as Mac OS:
+If you don't have such access, you can use the Windows MSDOS command line, typing the following commands in sequence.
+
+```Unix
+> python -m venv ifc_pyenv
+> ifc_pyenv\Scripts\activate
+> 
+```
+
+you can create <code>r_home_path.txt</code> manually by copying and pasting the output into a text file with this name. At the command ltine, in a Unix environment, such as Mac OS:
 ```Unix
 > R RHOME
 ```

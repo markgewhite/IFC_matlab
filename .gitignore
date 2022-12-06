@@ -2,5 +2,10 @@
 *.cif
 *.mat
 *.txt
+*.asv
 __pycache__/*
 ifc_pyenv/*
+testTiffReader.m
+test_exportToXIF.m
+test_setup.py
+tiff_read_header.m
