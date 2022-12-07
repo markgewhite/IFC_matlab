@@ -39,7 +39,7 @@ Open the installed R application (R Gui). Install the IFC package at the R comma
 ```Unix
 > install.packages("IFC") 
 ```
-In Windows, you will probably get a warning message saying the library is not writeable. Windows prevents the R application from writing to the Program Files directory. Instead, install the package into your personal directory when prompted by a dialogue box. (The personal directory will be something like: "C:/Users/<you>/AppData/Local/R/win-library/4.2".) The installation procedure should then run with a string of messages in the window.
+In Windows, you will probably get a warning message saying the library is not writeable. Windows prevents the R application from writing to the Program Files directory. A dialogue box appears asking, "Would you like to use a personal library instead?" Select Yes. You may then be asked to confirm the personal library's path, which will be something like: "C:/Users/<you>/AppData/Local/R/win-library/4.2". Finally, a third dialogue box asked to select a CRAN mirror like you did when first downloading the application from the web site. The download and installation procedure should then run with a string of messages in the window.
 
 If you prefer to use the latest IFC version from github instead, then follow the author's instructions [here](https://github.com/gitdemont/IFC).
 
@@ -47,9 +47,9 @@ Once the installation is complete, you need to save a file holding the R home di
 ```Unix
 > R.home()
 ```
-Copy the output (R Home path). Open a text editor, such as Notepad (Windows) or TextEdit (Mac), and paste the home path into a new file. It should have a single line. Save the file as <code>r_home_path.txt</code> in the same directory as the Matlab files.
+Copy the output (R Home path) without the quotes. Open a text editor, such as Notepad (Windows) or TextEdit (Mac), and paste the home path into a new file. It should have a single line. Save the file as <code>r_home_path.txt</code> in the same directory as the Matlab files.
 
-Close R application. You won't need it again other than to update the IFC package from time to time.
+Close R application - you don't need to save the workspace image. You won't need it again other than to update the IFC package from time to time.
 
 ### Python installation
 
@@ -57,7 +57,7 @@ Python will need to be installed as well to provide the interface between Matlab
 
 You can download a compatible version of Python from [https://www.python.org/downloads/](https://www.python.org/downloads/).
 
-1. Download the package/binaries
+1. Download the package/binaries for your operating system
 2. Run the executable installer
 3. Click checkbox "Add Python to PATH"
 4. Select custom installation - see below
@@ -65,16 +65,15 @@ You can download a compatible version of Python from [https://www.python.org/dow
 If, as is most likely, the latest version of Python is not compatible with Matab, you will need to click on link for your operating system and then find the suitable version. There are lots of options. For Windows, the "Windows installer (64-bit)" is recommended. For Mac, choose the installer for your CPU type.  
 
 For the custom installation, the following are required:
- - Install for all users
- - Optional Features: pip, py launcher
- - Advanced Options: Associate files with Python, Add Python to environment variables.
+ - Optional Features: pip, py launcher, for all users
+ - Advanced Options: Install for all users, Associate files with Python, Add Python to environment variables.
 
-Check that python has been installed correctly by launching the command line (if you already had the command line open, close and re-start it):
+Check that python has been installed correctly by launching the command line (CMD in Windows, Terminal in Mac):
 ```Unix
 > python --version
 ```
 
-If command is not recognised, then you might have forgotten to click set PATH during the installation. Helpful instructions can be found [here](https://www.digitalocean.com/community/tutorials/install-python-windows-10as) well as elsewhere. If you want to know more about Python virtual environments, try this [primer](https://realpython.com/python-virtual-environments-a-primer/).
+If command is not recognised, first try re-starting the terminal application. If that does not work, then you might have forgotten to click set PATH during the installation. Helpful instructions can be found [here](https://www.digitalocean.com/community/tutorials/install-python-windows-10as) well as elsewhere. If you want to know more about Python virtual environments, try this [primer](https://realpython.com/python-virtual-environments-a-primer/).
 
 Check that the package installer, pip, was installed with Python:
 
