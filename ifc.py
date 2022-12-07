@@ -13,13 +13,14 @@ if os.path.isfile(r_ref_filename):
  
     #read whole file to a string
     r_home_path = r_ref_file.read()
+
     # remove newline character if present
     if '\n' in r_home_path:
         r_home_path = r_home_path[:-1]
-    print(r_home_path)
- 
+
     #close file
     r_ref_file.close()
+
 else:
     print('Cannot find R reference file: r_home_path.txt')
  
@@ -31,7 +32,9 @@ import rpy2.robjects.numpy2ri as rpyn
 
 import numpy as np
 
+
 def import_ifc():
+    
     ifc_package = importr('IFC')
 
 

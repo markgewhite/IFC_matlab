@@ -8,8 +8,8 @@ Created on Wed Nov 23 17:59:27 2022
 import numpy as np
 import ifc as ifc
 
-ifc.import_ifc('/Library/Frameworks/R.framework/Resources')
+ifc.import_ifc()
 #offsets_r = ifc.getOffsets( 'Agrostis_gigantea_32_.cif' )
 #info = ifc.getInfo( 'Agrostis_gigantea_32_.cif' )
 #sel = np.arange(10)
-data = ifc.extractImagesToMatrix( 'data/example.cif' )
+data = ifc.extractImagesToMatrix( 'example.cif' )

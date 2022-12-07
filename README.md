@@ -35,22 +35,21 @@ R will need to be installed on your system to run the IFC package. The latest ve
 3. Click on the package/binaries suitable for your OS version (base)
 4. Follow the usual prompts to install the software using the defaults ('User Installation')
 
-If you are installing in Windows, copy the Program Files folder for R that you are asked to confirm during the installation. Open Notepad (or another text editor) and paste the path as a single line into the file. Save the file as <code>r_home_path.txt</code> in the same directory as the Matlab code (see above). 
-
-This step is necessary because in the R installation on windows does not add R_HOME to the PATH environment variable. 
-
-Alternatively, if you have a Mac, this file can be created automatically in Terminal:
+Open the installed R application (R Gui). Install the IFC package at the R command line:
 ```Unix
-> R RHOME > r_home_path.txt 
+> install.packages("IFC") 
 ```
+In Windows, you will probably get a warning message saying the library is not writeable. Windows prevents the R application from writing to the Program Files directory. Instead, install the package into your personal directory when prompted by a dialogue box. (The personal directory will be something like: "C:/Users/<you>/AppData/Local/R/win-library/4.2".) The installation procedure should then run with a string of messages in the window.
 
-You can also obtain R_HOME by opening R Studio and typing:
+If you prefer to use the latest IFC version from github instead, then follow the author's instructions [here](https://github.com/gitdemont/IFC).
+
+Once the installation is complete, you need to save a file holding the R home directory for the RPY2 Python package. Type the following, at the R command line:
 ```Unix
 > R.home()
 ```
-Then copy and paste output into the file <code>r_home_path.txt</code> saving it in the same directory as the Matlab files.
+Copy the output (R Home path). Open a text editor, such as Notepad (Windows) or TextEdit (Mac), and paste the home path into a new file. It should have a single line. Save the file as <code>r_home_path.txt</code> in the same directory as the Matlab files.
 
-Later when running Matlab, you don't need R Studio open.
+Close R application. You won't need it again other than to update the IFC package from time to time.
 
 ### Python installation
 

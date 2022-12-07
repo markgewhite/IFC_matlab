@@ -14,6 +14,8 @@ function module = init_ifc
     if isempty(rHomePath)
         error('r_home_path.txt does not exist. It should specify the path to R HOME.');
     end
+
+    % import the Python IFC module
     current_dir = pwd;
     cd( rHomePath );
     module = py.importlib.import_module('ifc');
